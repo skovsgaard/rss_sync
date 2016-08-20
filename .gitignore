@@ -18,3 +18,6 @@ erl_crash.dump
 
 # Vim be all like ".swp!!!!"
 *.swp
+
+# Don't keep the testing directory
+/tmp

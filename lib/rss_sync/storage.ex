@@ -1,5 +1,5 @@
 defmodule RssSync.Storage do
-  @storage_location Path.join([System.user_home, ".rss_sync", "/", "rss_sync.dat"])
+  @storage_location Application.get_env(:rss_sync, :storage_location)
 
   def start_link do
     Agent.start_link(&load_from_disk/0, name: __MODULE__)
