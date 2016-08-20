@@ -15,10 +15,17 @@ defmodule RssSync.Storage do
 
   def find(meta_value) do
     Agent.get(__MODULE__, fn state ->
-      Enum.find(state, fn {meta, _entries} ->
-        meta_value in Map.values(meta)
+      Enum.find(state, fn {url, {meta, _entries}} ->
+        meta_value in Map.values(meta) or meta_value == url
       end)
     end)
+  end
+
+  def persist do
+    {:ok, dets_name} =
+      :dets.open_file(:rss_sync, file: String.to_char_list(@storage_location))
+    :dets.insert(dets_name, all)
+    :ok = :dets.close(dets_name)
   end
 
   defp load_from_disk do
@@ -26,7 +33,7 @@ defmodule RssSync.Storage do
       :dets.open_file :rss_sync, file: String.to_char_list(@storage_location)
     previous_stored =
       :dets.foldl(fn x, acc -> [x|acc] end, [], dets_name) |> Enum.reverse
-    :ok = :dets.close dets_name
+    :ok = :dets.close(dets_name)
 
     previous_stored
   end
