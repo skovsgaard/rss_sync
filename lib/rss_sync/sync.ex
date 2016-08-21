@@ -2,12 +2,30 @@ defmodule RssSync.Sync do
   use GenServer
   alias RssSync.Storage
 
+  @doc """
+  Starts the Sync server. Should only be called from a Supervisor.
+  """
   def start_link, do: GenServer.start_link(__MODULE__, System.os_time, name: __MODULE__)
 
+  @doc """
+  Ensures that the state of the Storage server corresponds to all its
+  stored remotes, then asks the Storage server to persist its data.
+  Returns `:ok`.
+  """
   def sync, do: GenServer.call(__MODULE__, :sync)
 
+  @doc """
+  Takes an RSS `feed_url` and saves it to the Storage server.
+  Returns `{:ok, feed_url}`.
+
+  This function is basically a convenience wrapper around `Storage.put`,
+  removing the need for manually adding `meta` and `entries` when saving.
+  """
   def add(feed_url), do: GenServer.call(__MODULE__, {:add, feed_url})
 
+  @doc """
+  Takes a `feed_url`, deletes it from the Storage server, and returns `:ok`
+  """
   def delete(feed_url), do: GenServer.call(__MODULE__, {:del, feed_url})
 
   def handle_call(:sync, _from, _last_sync_time) do
