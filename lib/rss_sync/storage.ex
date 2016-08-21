@@ -13,6 +13,12 @@ defmodule RssSync.Storage do
     end)
   end
 
+  def del(feed_url) do
+    Agent.update(__MODULE__, fn state ->
+      Enum.reject(state, fn {url, _pair} -> url == feed_url end)
+    end)
+  end
+
   def find(meta_value) do
     Agent.get(__MODULE__, fn state ->
       Enum.find(state, fn {url, {meta, _entries}} ->
