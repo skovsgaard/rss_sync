@@ -29,6 +29,7 @@ defmodule RssSync.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [{:feeder, git: "https://github.com/michaelnisi/feeder"},
-     {:httpoison, "~> 0.9"}]
+     {:httpoison, "~> 0.9"},
+     {:ex_doc, "~> 0.13", only: :dev}]
   end
 end
