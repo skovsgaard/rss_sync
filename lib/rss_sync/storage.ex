@@ -9,7 +9,11 @@ defmodule RssSync.Storage do
 
   def put(feed_pair) do
     Agent.update(__MODULE__, fn state ->
-      [feed_pair|state] |> Enum.reverse
+      unless feed_pair in state do
+        [feed_pair|state] |> Enum.reverse
+      else
+        state
+      end
     end)
   end
 
