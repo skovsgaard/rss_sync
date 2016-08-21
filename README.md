@@ -6,7 +6,7 @@ Its API isn't finalized but it's usable as is and currently allows for adding, r
 
 ## Installation
 
-[Available on Hex](https://hex.pm/docs/publish), the package can be installed as:
+[Available on Hex](https://hex.pm/packages/rss_sync/0.1.0), the package can be installed as:
 
   1. Add `rss_sync` to your list of dependencies in `mix.exs`:
 
