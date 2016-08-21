@@ -11,7 +11,7 @@ defmodule RssSync.Mixfile do
      package: [
        licenses: ["MPL 2.0"],
        maintainers: ["Jonas Skovsgaard Christensen"],
-       links: %{"Github" => "github.com/skovsgaard/rss_sync"}
+       links: %{"Github" => "https://github.com/skovsgaard/rss_sync"}
      ],
      deps: deps()]
   end
