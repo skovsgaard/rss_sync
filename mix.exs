@@ -7,6 +7,12 @@ defmodule RssSync.Mixfile do
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     description: "An OTP application to keep RSS feeds in sync with the real world.",
+     package: [
+       licenses: ["MPL 2.0"],
+       maintainers: ["Jonas Skovsgaard Christensen"],
+       links: %{"Github" => "github.com/skovsgaard/rss_sync"}
+     ],
      deps: deps()]
   end
 
