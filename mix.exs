@@ -3,7 +3,7 @@ defmodule RssSync.Mixfile do
 
   def project do
     [app: :rss_sync,
-     version: "0.2.0",
+     version: "0.2.1",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -37,6 +37,6 @@ defmodule RssSync.Mixfile do
     [{:feeder, git: "https://github.com/michaelnisi/feeder"},
      {:httpoison, "~> 0.9"},
      {:ex_doc, "~> 0.13", only: :dev},
-     {:dialyxir, "~> 0.3.5"}]
+     {:dialyxir, "~> 0.3.5", only: :dev}]
   end
 end
