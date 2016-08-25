@@ -1,5 +1,7 @@
 # RssSync
 
+[![Hex.pm](https://img.shields.io/hexpm/v/rss_sync.svg)](hex.pm/packages/rss_sync)
+
 This is an OTP application which retrieves, parses, and stores RSS feeds, and when prompted to, keeps them in sync with their RSS feed sources.
 
 Its API isn't finalized but it's usable as is and currently allows for adding, removing, synchronizing, and persisting feeds to disk.
