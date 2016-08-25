@@ -2,9 +2,12 @@ defmodule RssSync.Sync do
   use GenServer
   alias RssSync.Storage
 
+  @type url() :: String.t
+
   @doc """
   Starts the Sync server. Should only be called from a Supervisor.
   """
+  @spec start_link() :: {:ok, pid()} | {:error, term()}
   def start_link, do: GenServer.start_link(__MODULE__, System.os_time, name: __MODULE__)
 
   @doc """
@@ -12,6 +15,7 @@ defmodule RssSync.Sync do
   stored remotes, then asks the Storage server to persist its data.
   Returns `:ok`.
   """
+  @spec sync() :: :ok
   def sync, do: GenServer.call(__MODULE__, :sync)
 
   @doc """
@@ -21,15 +25,17 @@ defmodule RssSync.Sync do
   This function is basically a convenience wrapper around `Storage.put`,
   removing the need for manually adding `meta` and `entries` when saving.
   """
+  @spec add(url) :: {:ok, url()}
   def add(feed_url), do: GenServer.call(__MODULE__, {:add, feed_url})
 
   @doc """
   Takes a `feed_url`, deletes it from the Storage server, and returns `:ok`
   """
+  @spec delete(url()) :: :ok
   def delete(feed_url), do: GenServer.call(__MODULE__, {:del, feed_url})
 
   def handle_call(:sync, _from, _last_sync_time) do
-    synchronize_feeds
+    [_h|_t] = synchronize_feeds
     spawn_link(&Storage.persist/0)
     {:reply, :ok, System.os_time}
   end
@@ -45,7 +51,7 @@ defmodule RssSync.Sync do
   end
 
   defp synchronize_feeds do
-    Enum.each(Storage.all, fn {url, _feed_pair} -> save_from_url(url) end)
+    for {url, _feed_pair} <- Storage.all, do: save_from_url(url)
   end
 
   defp save_from_url(url) do

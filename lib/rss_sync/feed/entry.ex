@@ -1,6 +1,8 @@
 defmodule RssSync.Feed.Entry do
   import RssSync.Feed.Enclosure, only: [build_enclosure: 1]
 
+  @type t :: %__MODULE__{}
+
   defstruct author: nil,
             duration: nil,
             enclosure: %{url: nil, length: nil, type: nil},
@@ -12,6 +14,7 @@ defmodule RssSync.Feed.Entry do
             title: nil,
             updated: nil
 
+  @spec build_entry(tuple()) :: t()
   def build_entry({:entry, author, duration,
                    enclosure, id, image, link,
                    subtitle, summary, title, updated}) do
